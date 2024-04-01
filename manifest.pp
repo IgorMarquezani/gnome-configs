@@ -43,7 +43,7 @@ package { ['python3', 'pip']:
 # criando link símbolico para o python
 exec { 'python-symbolic-link': 
     command => '/usr/bin/ln -s /usr/bin/python3.11 /usr/bin/python',
-    require => package['python3', 'pip'],
+    require => Package['python3', 'pip'],
 }
 
 # Rust
