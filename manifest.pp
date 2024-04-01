@@ -34,7 +34,7 @@ package { 'alacritty':
 }
 
 # instalação do python e pip
-package { ['python', 'pip']:
+package { ['python3', 'pip']:
   ensure => installed,
   require => Package['build-essential'],
 }
@@ -55,13 +55,13 @@ exec { 'instalar_go':
 
 # instalação do nodejs
 exec { 'instalar_node':
-  command => '/usr/bin/curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | NVM_DIR=/usr/local/nvm bash && source ./bashrc && nvm install 20',
+  command => '/usr/bin/curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | /usr/bin/mkdir /usr/local/nvm && NVM_DIR=/usr/local/nvm bash && source ./bashrc && nvm install 20',
   require => Package['curl'],
 }
 
 # instalação do Lua
 exec { 'instalar_lua':
-  command => '/usr/bin/wget -O /tmp/lua.tar.gz https://www.lua.org/ftp/lua-5.4.6.tar.gz && /usr/bin/cd /tmp && sudo /usr/bin/tar -xzf lua.tar.gz && cd lua-5.4.6 && /usr/bin/make linux test && /usr/bin/make install',
+  command => '/usr/bin/wget -O /tmp/lua.tar.gz https://www.lua.org/ftp/lua-5.4.6.tar.gz && cd /tmp && sudo /usr/bin/tar -xzf lua.tar.gz && cd lua-5.4.6 && /usr/bin/make linux test && /usr/bin/make install',
   creates => '/usr/local/bin/lua',
   require => Package['wget', 'tar'],
 }
