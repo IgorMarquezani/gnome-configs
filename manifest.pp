@@ -17,7 +17,6 @@ user { 'ixm':
 # criação do .bashrc
 exec { 'cria_bashrc':
     command => '/usr/bin/su ixm && /usr/bin/touch ~/.bashrc',
-    require => User(['ixm']),
 }
 
 # adicionando o repositório do Google Chrome
