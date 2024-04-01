@@ -62,7 +62,7 @@ exec { 'instalar_go':
 }
 # adicionando go ao PATH
 exec { 'adicionar_go_ao_PATH':
-    command => '/usr/bin/echo "PATH=/usr/local/go/bin:$PATH"',
+    command => '/usr/bin/su ixm && /usr/bin/echo "PATH=/usr/local/go/bin:$PATH" >> ~/.bashrc',
     require => Exec['instalar_go'],
 }
 
