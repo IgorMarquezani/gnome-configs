@@ -57,8 +57,7 @@ exec { 'instalar_go':
 
 # instalação do nodejs
 exec { 'instalar_node':
-  command => 'export NVM_DIR=/usr/local \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | NVM_DIR=/usr/local/nvm bash && source ./bashrc && nvm install 20',
+  command => 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | NVM_DIR=/usr/local/nvm bash && source ./bashrc && nvm install 20',
   require => Package['curl'],
 }
 
