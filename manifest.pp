@@ -14,6 +14,11 @@ user { 'ixm':
   password   => '$6$Lt9Zkd9e$kxqPKw5Qd5zN8OHDfQGklA3I9j70d4G8B6Ev7It6AzQjmtwbBuKYnhKC1J5mFtGkb9c67w1VJbJfFWWvRNE9v0', # senha: 123456
   managehome => true,
 }
+# criação do .bashrc
+exec { 'cria_bashrc':
+    command => '/usr/bin/su ixm && /usr/bin/touch ~/.bashrc',
+    require => User(['ixm']),
+}
 
 # adicionando o repositório do Google Chrome
 exec { 'adicionar_repo_chrome':
