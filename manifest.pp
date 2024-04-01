@@ -34,31 +34,46 @@ package { 'alacritty':
   require => Package['build-essential'],
 }
 
+# Python
 # instalação do python e pip
 package { ['python3', 'pip']:
   ensure => installed,
   require => Package['build-essential'],
 }
+# criando link símbolico para o python
+exec { 'python-symbolic-link': 
+    command => '/usr/bin/ln -s /usr/bin/python3.11 /usr/bin/python',
+    require => package['python3', 'pip'],
+}
 
+# Rust
 # instalação do Rust
 exec { 'instalar_rust':
-  command => '/usr/bin/curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | read 1 | /usr/bin/sh -s -- -y',
+  command => 'su ixm && /usr/bin/curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | /usr/bin/sh -s -- -y',
   require => Package['curl'],
 }
 
+# Go
 # instalação do Go
 exec { 'instalar_go':
   command => '/usr/bin/wget -O /tmp/go.tar.gz https://golang.org/dl/go1.22.1.linux-amd64.tar.gz && /usr/bin/tar -C /usr/local -xzf /tmp/go.tar.gz',
   creates => '/usr/local/go',
   require => Package['wget'],
 }
+# adicionando go ao PATH
+exec { 'adicionar_go_ao_PATH':
+    command => 'echo "PATH=/usr/local/go/bin:$PATH"',
+    require => Exec['instalar_go'],
+}
 
+# NodeJS
 # instalação do nodejs
 exec { 'instalar_node':
-  command => '/usr/bin/curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | NVM_DIR=/usr/local/nvm bash && source ~/bashrc && nvm install 20',
+  command => ' su ixm && /usr/bin/curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | source ~/bashrc && nvm install 20',
   require => Package['curl'],
 }
 
+# Lua
 # instalação do Lua
 exec { 'instalar_lua':
   command => '/usr/bin/wget -O /tmp/lua.tar.gz https://www.lua.org/ftp/lua-5.4.6.tar.gz && cd /tmp && sudo /usr/bin/tar -xzf lua.tar.gz && cd lua-5.4.6 && /usr/bin/make linux test && /usr/bin/make install',
