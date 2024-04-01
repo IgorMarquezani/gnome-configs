@@ -1,4 +1,3 @@
-# instalação dos pacotes build-essential, wget, curl, python, python-pip, lua
 package { ['build-essential', 'wget', 'curl', 'tar']:
   ensure => installed,
 }
@@ -42,27 +41,27 @@ package { ['python', 'pip']:
 
 # instalação do Rust
 exec { 'instalar_rust':
-  command => 'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh',
+  command => '/usr/bin/curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | /usr/bin/sh',
   creates => '/home/ixm/.cargo', 
   require => Package['curl'],
 }
 
 # instalação do Go
 exec { 'instalar_go':
-  command => '/usr/bin/wget -O /tmp/go.tar.gz https://golang.org/dl/go1.22.1.linux-amd64.tar.gz && sudo tar -C /usr/local -xzf /tmp/go.tar.gz',
+  command => '/usr/bin/wget -O /tmp/go.tar.gz https://golang.org/dl/go1.22.1.linux-amd64.tar.gz && /usr/bin/tar -C /usr/local -xzf /tmp/go.tar.gz',
   creates => '/usr/local/go',
   require => Package['wget'],
 }
 
 # instalação do nodejs
 exec { 'instalar_node':
-  command => 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | NVM_DIR=/usr/local/nvm bash && source ./bashrc && nvm install 20',
+  command => '/usr/bin/curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | NVM_DIR=/usr/local/nvm bash && source ./bashrc && nvm install 20',
   require => Package['curl'],
 }
 
 # instalação do Lua
 exec { 'instalar_lua':
-  command => '/usr/bin/wget -O /tmp/lua.tar.gz https://www.lua.org/ftp/lua-5.4.6.tar.gz && cd /tmp && sudo tar -xzf lua.tar.gz && cd lua-5.4.6 && sudo make linux test && sudo make install',
+  command => '/usr/bin/wget -O /tmp/lua.tar.gz https://www.lua.org/ftp/lua-5.4.6.tar.gz && /usr/bin/cd /tmp && sudo /usr/bin/tar -xzf lua.tar.gz && cd lua-5.4.6 && /usr/bin/make linux test && /usr/bin/make install',
   creates => '/usr/local/bin/lua',
   require => Package['wget', 'tar'],
 }
