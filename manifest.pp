@@ -41,7 +41,7 @@ package { ['python3', 'pip']:
 
 # instalação do Rust
 exec { 'instalar_rust':
-  command => '/usr/bin/curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | /usr/bin/sh',
+  command => '/usr/bin/curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | read 1 | /usr/bin/sh -s -- -y',
   require => Package['curl'],
 }
 
