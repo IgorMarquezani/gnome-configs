@@ -49,7 +49,7 @@ exec { 'python-symbolic-link':
 # Rust
 # instalação do Rust
 exec { 'instalar_rust':
-  command => 'su ixm && /usr/bin/curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | /usr/bin/sh -s -- -y',
+  command => '/usr/bin/su ixm && /usr/bin/curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | /usr/bin/sh -s -- -y',
   require => Package['curl'],
 }
 
@@ -69,7 +69,7 @@ exec { 'adicionar_go_ao_PATH':
 # NodeJS
 # instalação do nodejs
 exec { 'instalar_node':
-  command => ' su ixm && /usr/bin/curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | source ~/bashrc && nvm install 20',
+  command => '/usr/bin/su ixm && /usr/bin/curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | source ~/bashrc && nvm install 20',
   require => Package['curl'],
 }
 
