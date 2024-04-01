@@ -17,7 +17,7 @@ user { 'ixm':
 
 # adicionando o repositório do Google Chrome
 exec { 'adicionar_repo_chrome':
-  command => '/usr/bin/wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | /usr/bin/apt-key add - && /usr/bin/echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | /usr/bin/tee /etc/apt/sources.list.d/google-chrome.list',
+  command => '/usr/bin/wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | /usr/bin/apt-key add - && /usr/bin/echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | /usr/bin/tee /etc/apt/sources.list.d/google-chrome.list && /usr/bin/apt update',
   require => Package['wget'],
 }
 
@@ -42,7 +42,6 @@ package { ['python3', 'pip']:
 # instalação do Rust
 exec { 'instalar_rust':
   command => '/usr/bin/curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | /usr/bin/sh',
-  creates => '/home/ixm/.cargo', 
   require => Package['curl'],
 }
 
@@ -55,7 +54,7 @@ exec { 'instalar_go':
 
 # instalação do nodejs
 exec { 'instalar_node':
-  command => '/usr/bin/curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | /usr/bin/mkdir /usr/local/nvm && NVM_DIR=/usr/local/nvm bash && source ./bashrc && nvm install 20',
+  command => '/usr/bin/curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | NVM_DIR=/usr/local/nvm bash && source ./bashrc && nvm install 20',
   require => Package['curl'],
 }
 
