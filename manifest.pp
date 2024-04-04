@@ -16,7 +16,7 @@ user { 'ixm':
 }
 # criação do .bashrc
 exec { 'cria_bashrc':
-    command => '/usr/bin/su ixm && /usr/bin/touch ~/.bashrc',
+    command => '/usr/bin/su ixm && /usr/bin/touch /home/ixm/.bashrc',
 }
 
 # adicionando o repositório do Google Chrome
@@ -65,10 +65,6 @@ exec { 'instalar_go':
   require => Package['wget'],
 }
 # adicionando go ao PATH
-exec { 'adicionar_go_ao_PATH':
-    command => '/usr/bin/su ixm && /usr/bin/echo "PATH=/usr/local/go/bin:$PATH" >> ~/.bashrc',
-    require => Exec['instalar_go'],
-}
 
 # NodeJS
 # instalação do nodejs
@@ -83,4 +79,23 @@ exec { 'instalar_lua':
   command => '/usr/bin/wget -O /tmp/lua.tar.gz https://www.lua.org/ftp/lua-5.4.6.tar.gz && cd /tmp && sudo /usr/bin/tar -xzf lua.tar.gz && cd lua-5.4.6 && /usr/bin/make linux test && /usr/bin/make install',
   creates => '/usr/local/bin/lua',
   require => Package['wget', 'tar'],
+}
+
+package { ['zsh']:
+    ensure => installed,
+}
+
+exec { 'limpa_.bashrc':
+    command => '/usr/bin/su ixm && echo "" > /home/ixm/.bashrc',
+    require => Package['zsh']
+}
+
+exec { 'adicionar_go_ao_PATH':
+    command => '/usr/bin/su ixm && /usr/bin/echo "export PATH=/usr/local/go/bin:$PATH" >> /home/ixm/.bashrc',
+    require => Exec['instalar_go'],
+}
+
+exec { 'adicionar_rust_ao_PATH':
+    command => '/usr/bin/su ixm && /usr/bin/echo "export PATH=/home/ixm/.cargo/bin:$PATH" >> /home/ixm/.bashrc',
+    require => Exec['instalar_rust'],
 }
