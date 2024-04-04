@@ -14,10 +14,6 @@ user { 'ixm':
   password   => '$6$Lt9Zkd9e$kxqPKw5Qd5zN8OHDfQGklA3I9j70d4G8B6Ev7It6AzQjmtwbBuKYnhKC1J5mFtGkb9c67w1VJbJfFWWvRNE9v0', # senha: 123456
   managehome => true,
 }
-# criação do .bashrc
-exec { 'cria_bashrc':
-    command => '/usr/bin/su ixm && /usr/bin/touch /home/ixm/.bashrc',
-}
 
 # adicionando o repositório do Google Chrome
 exec { 'adicionar_repo_chrome':
@@ -50,27 +46,12 @@ exec { 'python-symbolic-link':
     require => Package['python3', 'pip'],
 }
 
-# Rust
-# instalação do Rust
-exec { 'instalar_rust':
-  command => '/usr/bin/su ixm && /usr/bin/curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | /usr/bin/sh -s -- -y',
-  require => Package['curl'],
-}
-
 # Go
 # instalação do Go
 exec { 'instalar_go':
   command => '/usr/bin/wget -O /tmp/go.tar.gz https://golang.org/dl/go1.22.1.linux-amd64.tar.gz && /usr/bin/tar -C /usr/local -xzf /tmp/go.tar.gz',
   creates => '/usr/local/go',
   require => Package['wget'],
-}
-# adicionando go ao PATH
-
-# NodeJS
-# instalação do nodejs
-exec { 'instalar_node':
-  command => '/usr/bin/su ixm && /usr/bin/curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | source ~/bashrc && nvm install 20',
-  require => Package['curl'],
 }
 
 # Lua
@@ -83,19 +64,4 @@ exec { 'instalar_lua':
 
 package { ['zsh']:
     ensure => installed,
-}
-
-exec { 'limpa_.bashrc':
-    command => '/usr/bin/su ixm && echo "" > /home/ixm/.bashrc',
-    require => Package['zsh']
-}
-
-exec { 'adicionar_go_ao_PATH':
-    command => '/usr/bin/su ixm && /usr/bin/echo "export PATH=/usr/local/go/bin:\$PATH" >> /home/ixm/.bashrc',
-    require => Exec['instalar_go'],
-}
-
-exec { 'adicionar_rust_ao_PATH':
-    command => '/usr/bin/su ixm && /usr/bin/echo "export PATH=/home/ixm/.cargo/bin:\$PATH" >> /home/ixm/.bashrc',
-    require => Exec['instalar_rust'],
 }
