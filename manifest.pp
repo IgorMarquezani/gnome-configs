@@ -91,11 +91,11 @@ exec { 'limpa_.bashrc':
 }
 
 exec { 'adicionar_go_ao_PATH':
-    command => '/usr/bin/su ixm && /usr/bin/echo "export PATH=/usr/local/go/bin:$PATH" >> /home/ixm/.bashrc',
+    command => '/usr/bin/su ixm && /usr/bin/echo "export PATH=/usr/local/go/bin:\$PATH" >> /home/ixm/.bashrc',
     require => Exec['instalar_go'],
 }
 
 exec { 'adicionar_rust_ao_PATH':
-    command => '/usr/bin/su ixm && /usr/bin/echo "export PATH=/home/ixm/.cargo/bin:$PATH" >> /home/ixm/.bashrc',
+    command => '/usr/bin/su ixm && /usr/bin/echo "export PATH=/home/ixm/.cargo/bin:\$PATH" >> /home/ixm/.bashrc',
     require => Exec['instalar_rust'],
 }
