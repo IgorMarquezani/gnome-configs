@@ -1,0 +1,49 @@
+[colors.primary]
+background = "#1b1d21"
+
+[cursor]
+blink_interval = 700
+blink_timeout = 1
+
+[cursor.style]
+blinking = "Always"
+shape = "Block"
+
+[font.bold]
+family = "JetBrains Mono"
+style = "Bold Italic"
+
+[font.bold_italic]
+family = "JetBrains Mono"
+style = "Bold Italic"
+
+[font.italic]
+family = "JetBrains Mono"
+style = "Italic"
+
+[font.normal]
+#Default = "JetBrains Mono"
+family = "JetBrains Mono"
+style = "Medium"
+
+[scrolling]
+history = 4000
+multiplier = 3
+
+[shell]
+program = "/bin/zsh"
+
+[window]
+decorations = "none"
+dynamic_title = true
+opacity = 0.9
+startup_mode = "Windowed"
+title = "Alacritty"
+
+[window.class]
+general = "Alacritty"
+instance = "Alacritty"
+
+[window.dimensions]
+columns = 190
+lines = 48

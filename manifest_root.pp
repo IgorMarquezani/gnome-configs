@@ -8,13 +8,6 @@ package { 'gnome':
   require => Package['build-essential'],
 }
 
-# criação do usuário ixm com a senha 123456
-user { 'ixm':
-  ensure     => present,
-  password   => '$6$Lt9Zkd9e$kxqPKw5Qd5zN8OHDfQGklA3I9j70d4G8B6Ev7It6AzQjmtwbBuKYnhKC1J5mFtGkb9c67w1VJbJfFWWvRNE9v0', # senha: 123456
-  managehome => true,
-}
-
 # adicionando o repositório do Google Chrome
 exec { 'adicionar_repo_chrome':
   command => '/usr/bin/curl -fSsL https://dl.google.com/linux/linux_signing_key.pub | /usr/bin/gpg --dearmor | /usr/bin/tee /usr/share/keyrings/google-chrome.gpg >> /dev/null && \
